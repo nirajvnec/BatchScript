@@ -15,10 +15,14 @@ endlocal
 
 
 @echo off
+
 set configurations=CreditErcDev Dummy-Sit ProdParallelDEV FRTBDev FRTB03 FRTB01 FRTB02 FRTB04 FRTB05
 
 for %%i in (%configurations%) do (
+
   MSBuild.exe .\\%1 /nologo /p:PublishProfile=JenkinProfile /p:Configuration=%%i /p:Platform="Any CPU" /p:DeployOnBuild=true /p:DeleteExistingFiles=true /p:TransformConfigFiles=true
+
+
   PowerShell Copy-Item Config\WebApi.Config\publish\Web.config Config\WebApi.Config\TransformedConfig\%%i.config
 )
 
